@@ -1,0 +1,70 @@
+home: 
+     - !ruby/sym url   : 
+       !ruby/sym tests : 
+          demo-notice : This is a demo store. Any orders placed through this store will not be honored or fulfilled.
+products:
+     - !ruby/sym url   : sony-ericsson-w810i.html
+       !ruby/sym tests : 
+          demo-notice : This is a demo store. Any orders placed through this store will not be honored or fulfilled.
+     - !ruby/sym url   : zolof-the-rock-and-roll-destroyer-lol-cat-t-shirt-126.html
+       !ruby/sym tests : 
+          demo-notice : This is a demo store. Any orders placed through this store will not be honored or fulfilled.
+          add-to-wishlist: Add to Wishlist
+          add-to-comapare: Add to Compare
+          model: zolof
+          product-tags: Other people marked this product with these tags
+          free-shipping: Free Shipping on all orders over $100 More Information
+product:
+     - !ruby/sym url   : 
+       !ruby/sym tests : 
+           demo-notice : This is a demo store. Any orders placed through this store will not be honored or fulfilled.
+category:
+     - !ruby/sym url   : 
+       !ruby/sym tests : 
+           demo-notice : This is a demo store. Any orders placed through this store will not be honored or fulfilled.
+
+categories:
+     - !ruby/sym url   : catalog/category/view/s/cellphones/id/8/
+       !ruby/sym tests : 
+           demo-notice : This is a demo store. Any orders placed through this store will not be honored or fulfilled.
+search:
+     - !ruby/sym url   : catalogsearch/result/?q=king
+       !ruby/sym tests : 
+          king-search  : Items 1 to 9 of 17 total
+          demo-notice : This is a demo store. Any orders placed through this store will not be honored or fulfilled.
+     - !ruby/sym url   : 'catalogsearch/result/index/?price=1000-2000&q=king'
+       !ruby/sym tests : 
+          king-search-price-1000-2000  : 2 Item(s)
+          demo-notice : This is a demo store. Any orders placed through this store will not be honored or fulfilled.
+cart_empty:
+     - !ruby/sym url   : checkout/cart/
+       !ruby/sym tests :
+          proceed-to-checkout: Proceed to Checkout
+          demo-notice : This is a demo store. Any orders placed through this store will not be honored or fulfilled.
+          upsells-notice: Based on your selection, you may be interested in the following items
+          discount-codes: Enter your coupon code if you have one.
+          estimate-shipping: Enter your destination to get a shipping estimate.
+          added-to-cart: was added to your shopping cart.
+cart:
+     - !ruby/sym url   : checkout/cart/
+       !ruby/sym tests :
+          proceed-to-checkout: Proceed to Checkout
+          demo-notice : This is a demo store. Any orders placed through this store will not be honored or fulfilled.
+          upsells-notice: Based on your selection, you may be interested in the following items
+          discount-codes: Enter your coupon code if you have one.
+          estimate-shipping: Enter your destination to get a shipping estimate.
+          added-to-cart: was added to your shopping cart.
+cart_shipping:
+     - !ruby/sym url   : checkout/cart/
+       !ruby/sym tests :
+          ups: United Parcel Service
+          free-shipping : Free Shipping
+checkout:
+     - !ruby/sym url   : checkout/onepage/
+       !ruby/sym tests : 
+          demo-notice : This is a demo store. Any orders placed through this store will not be honored or fulfilled.
+success:
+     - !ruby/sym url   : checkout/onepage/success
+       !ruby/sym tests : 
+          demo-notice : This is a demo store. Any orders placed through this store will not be honored or fulfilled.
+          order-number: "Your order # is:"

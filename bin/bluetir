@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+path = '../../lib/'
+
+=begin
+there is no point in getting arguments here, all settings will have to be read from a  file
+
+require File.expand_path("#{path}bluetir/version", __FILE__)
+require File.expand_path("#{path}bluetir/parse", __FILE__)
+
+options = Bluetir::Parse.parse(ARGV)
+=end
+
+## this code runs the tests
+require File.expand_path("#{path}watir", __FILE__)

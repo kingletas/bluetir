@@ -1,0 +1,15 @@
+app_config:
+     custom_base_url: http://enterprise-demo.magentocommerce.com/ # Base URL of the store to test, followed by trailing slash
+     custom_number_of_users: 1 # How many users the test should emulate
+     debug: false # toggle debugging messages to console
+     enable_assertions : true   # toggle testing for assertions along with the automated tests. This is useful, but not needed 
+                                # and can cause tests to fail if the assertions.yml isn't properly configured
+     close_on_error:true # end test on error
+     screenshots_dir: screenshots # path to screenshots dir, relative to bluetir bin
+     emails: [
+                doug.hatcher@blueacorn.com,
+                luis@blueacorn.com,
+                cole@blueacorn.com,
+                don@blueacorn.com
+             ]
+     allow_email:'true' # toggles if to send email

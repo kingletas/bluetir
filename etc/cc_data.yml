@@ -1,0 +1,75 @@
+# Simple products
+- !ruby/sym product: {
+        !ruby/sym url : 'ottoman.html',
+        !ruby/sym attributes: []
+}
+
+- !ruby/sym product: {
+        !ruby/sym url : 'blackberry-8100-pearl.html',
+        !ruby/sym attributes: []
+}
+
+#- !ruby/sym product: {
+#        !ruby/sym url : 'shaimus-turn-the-other-way.html',
+#        !ruby/sym attributes: []
+#}
+
+#Configurable
+- !ruby/sym product: {
+    !ruby/sym url : 'zolof-the-rock-and-roll-destroyer-lol-cat-t-shirt-126.html',
+    !ruby/sym attributes: [
+      {
+          !ruby/sym identifier: !ruby/sym id,
+          !ruby/sym element : 'attribute525',
+          !ruby/sym select  : 'Small'
+      },
+      {
+          !ruby/sym identifier: !ruby/sym id,
+          !ruby/sym element : 'attribute272',
+          !ruby/sym select  : 'Red'
+      }
+     ]
+  }
+- !ruby/sym product: {
+      !ruby/sym url : 'sony-vaio-11-1-notebook-pc.html/',
+        !ruby/sym attributes: [
+    {
+      !ruby/sym identifier : !ruby/sym id,
+      !ruby/sym radio : 1,
+      !ruby/sym element : 'bundle-option-1-2'
+      }
+     ]
+}
+
+#Bundle
+- !ruby/sym product: {
+    !ruby/sym url : 'computer.html',
+    !ruby/sym qty : '1', # Added varitable qty support, if this isn't set it defaults to 3
+    !ruby/sym attributes: [
+      {
+        !ruby/sym identifier: !ruby/sym id,
+        !ruby/sym element : 'bundle-option-10-25',
+        !ruby/sym radio  : true
+      },
+      {
+        !ruby/sym identifier: !ruby/sym id,
+        !ruby/sym element : 'bundle-option-9-21',
+        !ruby/sym radio  : 1
+      },
+      {
+        !ruby/sym identifier: !ruby/sym id,
+        !ruby/sym element : 'bundle-option-8-19',
+        !ruby/sym radio  : true
+      },
+      {
+        !ruby/sym identifier: !ruby/sym id,
+        !ruby/sym element : 'bundle-option-7-qty-input',
+        !ruby/sym input  : '2' #RAID
+      },
+      {
+        !ruby/sym identifier: !ruby/sym id,
+        !ruby/sym element : 'bundle-option-5-11',
+        !ruby/sym checkbox  : false # checkbox support, toggle true or false 
+      }
+     ]
+  }

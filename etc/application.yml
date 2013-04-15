@@ -1,0 +1,10 @@
+#configuration files
+#
+# This is the application config, we set up the test suite we want to run here.
+# Change the values below to reflect the test you would like to run.
+#
+config: ee_config.yml
+assertions: ee_assertions.yml
+checkout: checkout.yml
+data: ee_data.yml
+cart_shipping: ee_shipping.yml

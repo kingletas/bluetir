@@ -1,0 +1,79 @@
+# Simple products
+- !ruby/sym product: {
+        !ruby/sym url : 'furniture/living-room/ottoman.html',
+        !ruby/sym attributes: []
+}
+
+- !ruby/sym product: {
+        !ruby/sym url : 'electronics/cell-phones/at-t-8525-pda.html',
+        !ruby/sym attributes: []
+}
+
+# Downloadable with Links 
+
+# - !ruby/sym product: {
+#         !ruby/sym url : 'specials/nusantara-demo.html',
+#         !ruby/sym attributes: [
+#           {
+#             !ruby/sym identifier: !ruby/sym id,
+#             !ruby/sym element : 'links_1',
+#             !ruby/sym checkbox  : true
+#           }
+#         ]
+# }
+
+#Configurable
+- !ruby/sym product: {
+    !ruby/sym url : 'apparel/men/zolof-the-rock-and-roll-destroyer-lol-cat-t-shirt-1.html',
+    !ruby/sym attributes: [
+      {
+          !ruby/sym identifier: !ruby/sym id,
+          !ruby/sym element : 'attribute80',
+          !ruby/sym select  : 'Green'
+      },
+      {
+          !ruby/sym identifier: !ruby/sym id,
+          !ruby/sym element : 'attribute149',
+          !ruby/sym select  : 'Small'
+      }
+     ]
+  }
+
+# Configurable with Click through 
+
+- !ruby/sym product: {
+      !ruby/sym url : 'electronics/computers/laptops/sony-vaio-11-1-notebook-pc.html',
+      !ruby/sym attributes: [
+        {
+          !ruby/sym identifier : !ruby/sym id,
+          !ruby/sym click  : button,
+          !ruby/sym class : 'button btn-cart',
+          !ruby/sym delay : 2
+        }
+     ]
+  }
+
+# # Bundle with Click Thru's
+
+# I can't get selects behind clickthrus to play ball...
+
+#   - !ruby/sym product: {
+#       !ruby/sym url : 'electronics/computers/build-your-own/gaming-computer.html',
+#       !ruby/sym attributes: [
+#         {
+#           !ruby/sym identifier : !ruby/sym id,
+#           !ruby/sym click  : button,
+#           !ruby/sym class : 'button btn-cart',
+#           !ruby/sym delay : 2
+#         },
+#         {
+#           !ruby/sym identifier : !ruby/sym id,
+#           !ruby/sym radio  : true,
+#           !ruby/sym element : 'bundle-option-11-34'
+#         },{
+#           !ruby/sym identifier : !ruby/sym id,
+#           !ruby/sym select  : '1 x Seagate 250GB HD - 5400RPM   +$0.00',
+#           !ruby/sym element : 'bundle-option-10'
+#         },
+#      ]
+#   }

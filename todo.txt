@@ -1,0 +1,5 @@
+Things left to do 
+-----------------
+
+* git hook cancels deployment if test fails (with switch to force deployment)
+  

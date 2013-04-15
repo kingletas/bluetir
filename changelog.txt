@@ -1,0 +1,27 @@
+Bugs:
+
+2) Error:
+test_mage_checkout_register(Bluetir::Bluetir_TestSuite):
+Selenium::WebDriver::Error::NoSuchElementError: Unable to locate element: {"method":"tag name","selector":"body"}
+    [remote server] file:///tmp/webdriver-profile20130329-2528-ygp56j/extensions/fxdriver@googlecode.com/components/driver_component.js:8284:in `FirefoxDriver.prototype.findElementInternal_'
+    [remote server] file:///tmp/webdriver-profile20130329-2528-ygp56j/extensions/fxdriver@googlecode.com/components/driver_component.js:8293:in `FirefoxDriver.prototype.findElement'
+    [remote server] file:///tmp/webdriver-profile20130329-2528-ygp56j/extensions/fxdriver@googlecode.com/components/command_processor.js:10275:in `DelayedCommand.prototype.executeInternal_/h'
+    [remote server] file:///tmp/webdriver-profile20130329-2528-ygp56j/extensions/fxdriver@googlecode.com/components/command_processor.js:10280:in `DelayedCommand.prototype.executeInternal_'
+    [remote server] file:///tmp/webdriver-profile20130329-2528-ygp56j/extensions/fxdriver@googlecode.com/components/command_processor.js:10220:in `DelayedCommand.prototype.execute/<'
+    /usr/lib/ruby/gems/1.8/gems/selenium-webdriver-2.31.0/lib/selenium/webdriver/remote/response.rb:52:in `assert_ok'
+    /usr/lib/ruby/gems/1.8/gems/selenium-webdriver-2.31.0/lib/selenium/webdriver/remote/response.rb:15:in `initialize'
+    /usr/lib/ruby/gems/1.8/gems/selenium-webdriver-2.31.0/lib/selenium/webdriver/remote/http/common.rb:59:in `new'
+    /usr/lib/ruby/gems/1.8/gems/selenium-webdriver-2.31.0/lib/selenium/webdriver/remote/http/common.rb:59:in `create_response'
+    /usr/lib/ruby/gems/1.8/gems/selenium-webdriver-2.31.0/lib/selenium/webdriver/remote/http/default.rb:66:in `request'
+    /usr/lib/ruby/gems/1.8/gems/selenium-webdriver-2.31.0/lib/selenium/webdriver/remote/http/common.rb:40:in `call'
+    /usr/lib/ruby/gems/1.8/gems/selenium-webdriver-2.31.0/lib/selenium/webdriver/remote/bridge.rb:616:in `raw_execute'
+    /usr/lib/ruby/gems/1.8/gems/selenium-webdriver-2.31.0/lib/selenium/webdriver/remote/bridge.rb:594:in `execute'
+    /usr/lib/ruby/gems/1.8/gems/selenium-webdriver-2.31.0/lib/selenium/webdriver/remote/bridge.rb:562:in `find_element_by'
+    /usr/lib/ruby/gems/1.8/gems/selenium-webdriver-2.31.0/lib/selenium/webdriver/common/search_context.rb:42:in `find_element'
+    /usr/lib/ruby/gems/1.8/gems/watir-webdriver-0.6.2/lib/watir-webdriver/browser.rb:172:in `text'
+    /var/www/bluetir/lib/watir.rb:235:in `place_order'
+    /var/www/bluetir/lib/watir.rb:201:in `checkout_common'
+    /var/www/bluetir/lib/watir.rb:193:in `finalize_checkout_as_customer'
+    /var/www/bluetir/lib/watir.rb:123:in `test_mage_checkout_register'
+    /var/www/bluetir/lib/watir.rb:116:in `times'
+    /var/www/bluetir/lib/watir.rb:116:in `test_mage_checkout_register'

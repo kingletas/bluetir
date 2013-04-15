@@ -1,0 +1,44 @@
+- !ruby/sym product: {
+        !ruby/sym url : 'burgundy-wine-cooler',
+        !ruby/sym attributes: []
+}
+
+- !ruby/sym product: {
+        !ruby/sym url : 'classic-double-5-x-7-silverplate-frame',
+        !ruby/sym attributes: []
+}
+
+- !ruby/sym product: {
+        !ruby/sym url : 'ladybug-musical',
+        !ruby/sym attributes: []
+}
+
+- !ruby/sym product: {
+        !ruby/sym url : 'julien-2-piece-salad-set',
+        !ruby/sym attributes: []
+}
+
+- !ruby/sym product: {
+        !ruby/sym url : 'lyndon-all-purpose-tongs',
+        !ruby/sym attributes: []
+}
+
+- !ruby/sym product: {
+        !ruby/sym url : 'silver-beads-2-x-3-silverplate-frame',
+        !ruby/sym attributes: []
+}
+
+- !ruby/sym product: {
+        !ruby/sym url : 'narrow-border-8-x-10-pewter-frame',
+        !ruby/sym attributes: []
+}
+
+- !ruby/sym product: {
+        !ruby/sym url : 'elephant-musical',
+        !ruby/sym attributes: []
+}
+
+- !ruby/sym product: {
+        !ruby/sym url : 'lyndon-8-x-10-silverplate-frame',
+        !ruby/sym attributes: []
+}

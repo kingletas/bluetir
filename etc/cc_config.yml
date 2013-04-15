@@ -1,0 +1,14 @@
+app_config:
+     custom_base_url: http://demo.magentocommerce.com/
+     custom_number_of_users: 1
+     debug: false
+     enable_assertions : true
+     close_on_error : true
+     screenshots_dir: screenshots
+     emails: [
+        doug.hatcher@blueacorn.com,
+        luis@blueacorn.com,
+        cole@blueacorn.com,
+        don@blueacorn.com
+    ]
+     allow_email: true
