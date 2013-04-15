@@ -1,0 +1,34 @@
+billing : 
+     firstname : Test user
+     lastname : Test user
+     company : company
+     email : test@test.com
+     street1 : sample street name
+     street2 : Please ignore this order developer test
+     region_id : California
+     city : Alamo
+     postcode : 94507
+     country_id : United States
+     telephone : 0038531399222
+     use_for_shipping_yes : use_for_shipping_yes
+billing_register:
+     customer_password: pass4testuser
+     confirm_password: pass4testuser
+shipping : 
+     firstname : Test user
+     lastname : Test user
+     email : test@test.com
+     street1 : sample street name
+     street2 : Please ignore this order developer test
+     region_id : California
+     city : Alamo
+     postcode : 94507
+     country_id : United States
+     telephone : 0038531399222
+     text: Continue
+shipping_method : 
+     method : s_method_flatrate_flatrate
+     text: Continue
+payment : 
+     method : p_method_checkmo
+     text: Continue

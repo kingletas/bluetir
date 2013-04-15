@@ -1,0 +1,16 @@
+shipping_quote : 
+     country:
+        !ruby/sym identifier: !ruby/sym id
+        !ruby/sym element : country
+        !ruby/sym select  : United States
+     state: 
+        !ruby/sym identifier: !ruby/sym id
+        !ruby/sym element : region_id
+        !ruby/sym select  : South Carolina
+     postcode:
+        !ruby/sym identifier: !ruby/sym id
+        !ruby/sym element : postcode
+        !ruby/sym text  : 29464
+shipping_method:
+         free : s_method_flatrate_flatrate
+         ups_gnd : s_method_ups_GND

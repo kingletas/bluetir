@@ -1,0 +1,44 @@
+= BlueTir
+
+BlueTir combines the power of Watir for automated testing with BlueAcorn's Magento expertise. BlueTir is developed in a website agnostic way using yaml files. Using Yaml files keeps the application robust, stable and portable while abstracting the data layer from the application itself. This will allow bluetir to be used by members of any team not just QA
+
+
+== BlueTir files
+
+BlueTir is written in ruby extending from watir and unit testing, however it follows the Unix way of develpement as much as possible
+
+All configuration files will be found under the etc directory. Some files will be deprecated soon in favor of a more robust but simple approach of grouping the files, similar to FreeBSD
+
+The main configuration file can be found under etc/config.yml it contains the base_url and the amount of users to run
+
+The etc/assertions.yml file contains the basics tests, although in future iterations this file will be deprecated in favor of using multiple files per page.
+
+The etc/data.yml is the product data to test - this file will be deprecated soon as well for the reasons mentioned above
+
+The etc/urls.yml will be used to test multiple urls - the main purpose is to guarantee during a deployment that all major pages are correct. During this run some screenshots will be taken
+
+The etc/checkout.yml file contains the data to use during the checkout - this file will be deprecated as well
+
+The etc/cart_shipping.yml file contains the data to use to request a shipping quote - this file will also be deprecated
+
+== BlueTir feature set
+
+* Automated order placement as guest or customer
+* Threaded ability to run multiple tests at the same time
+* Custom assertion of pages
+* Ability to take multiple screenshots
+
+== Contributing to BlueTir
+ 
+* Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
+* Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it.
+* Fork the project.
+* Start a feature/bugfix branch.
+* Commit and push until you are happy with your contribution.
+* Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
+* Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
+
+== Copyright
+
+Copyright (c) 2013 Luis E. Tineo. See LICENSE.txt for further details.
+
