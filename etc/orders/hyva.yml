@@ -1,0 +1,16 @@
+# The Hyvä demo's own sample data. Invented customer, real products.
+
+products:
+  - url: "atlas-pouf.html"
+
+customer:
+  email: "bluetir@example.test"
+  address:
+    firstname: "Test"
+    lastname: "Order"
+    street: "1 Test Street"
+    city: "Austin"
+    region: "Texas"
+    postcode: "78701"
+    country: "United States"
+    telephone: "5125550100"

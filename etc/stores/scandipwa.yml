@@ -1,0 +1,30 @@
+# The public ScandiPWA technology demo. The store code is part of the path.
+
+base_url: https://tech-demo.scandipwa.com/tech_storeview
+storefront: ../storefronts/scandipwa.yml
+assertions: ../assertions/scandipwa.yml
+baseline: ../../baselines/scandipwa.yml
+personas: ../personas.yml
+orders: ../orders/scandipwa.yml
+
+runs: 1
+# The mobile checkout renders slower than the desktop one and was finishing
+# just the wrong side of 45 seconds.
+timeout: 60
+headless: true
+screenshots_dir: ../../screenshots
+
+# A React storefront paints nothing until its bundle has run and its GraphQL
+# calls have returned, so the document being complete means very little here.
+settle: 14
+
+http:
+  delay: 2.0
+
+  # ScandiPWA's cookie notice covers the page and intercepts the add-to-cart
+  # click. It is a notice rather than a consent choice — one "GOT IT" and a link
+  # to the policy — and the dismissal lives in localStorage rather than in a
+  # cookie. Seeding it means the notice never opens, so nothing has to click a
+  # banner to get it out of the way.
+  local_storage:
+    cookie_popup_tech_storeview: '{"data":true,"expiration":2592000,"createdAt":1788800000000}'

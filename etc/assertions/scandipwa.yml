@@ -1,0 +1,30 @@
+# What each page has to say. Matching ignores case.
+#
+# A React storefront paints late, so `settle` in the store config matters more
+# here than the assertions do.
+
+home:
+  - url: ""
+    expect:
+      - "Smartphones"
+
+category:
+  - url: "smartphones-gadgets.html"
+    expect:
+      - "Smartphones & Gadgets"
+
+product:
+  - url: "product-162208.html"
+    expect:
+      - "Add to cart"
+
+cart:
+  # "Subtotal" rather than "Cart": at phone width this store drops the heading
+  # and shows the contents straight away, so the word is only there on a
+  # desktop. An assertion that holds at one width is not an assertion.
+  - expect:
+      - "Subtotal"
+
+checkout:
+  - expect:
+      - "Shipping"

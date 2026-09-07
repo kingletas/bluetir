@@ -1,0 +1,22 @@
+# The Magecom public Magento 2 Luma demo.
+#
+# The delay is deliberately slow: this is somebody else's shop, and nothing here
+# is in a hurry.
+
+base_url: https://magento.demo.magecom.net
+storefront: ../storefronts/magento2.yml
+assertions: ../assertions/magento2.yml
+baseline: ../../baselines/magecom-luma.yml
+personas: ../personas.yml
+orders: ../orders/magecom.yml
+
+runs: 1
+timeout: 30
+headless: true
+screenshots_dir: ../../screenshots
+
+# Magento's Knockout checkout renders after the document is complete.
+settle: 4
+
+http:
+  delay: 2.0

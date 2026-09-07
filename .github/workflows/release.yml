@@ -1,0 +1,69 @@
+name: Release
+
+# Tagging is the whole trigger: `git tag v1.2.3 && git push --tags` checks the
+# changelog has a section for it, then publishes a GitHub Release whose body is
+# that section.
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to release, without the leading v (e.g. 1.2.3)"
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+
+      - name: Work out which version this is
+        id: pick
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            version="${{ inputs.version }}"
+          else
+            version="${GITHUB_REF_NAME#v}"
+          fi
+          # A release with no notes is one nobody can read, so this stops here
+          # rather than publishing an empty body.
+          packaging/release-notes.sh "$version" > /dev/null
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      # A release nobody proved is a release nobody should trust. This installs
+      # the tagged commit the way the README tells a reader to, and runs the
+      # command from somewhere else — which is the case that was broken while
+      # every test passed, because every test ran it from the checkout.
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b # v1.321.0
+        with:
+          bundler-cache: true
+
+      - name: Check
+        run: make check
+
+      - name: Prove the install works
+        run: |
+          make install PREFIX="$RUNNER_TEMP/bin"
+          cd /
+          test "$("$RUNNER_TEMP/bin/bluetir" --version)" = "${{ steps.pick.outputs.version }}"
+
+      - name: Publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version="${{ steps.pick.outputs.version }}"
+          packaging/release-notes.sh "$version" > notes.md
+          if gh release view "v${version}" >/dev/null 2>&1; then
+            echo "v${version} exists: updating its notes"
+            gh release edit "v${version}" --title "bluetir ${version}" --notes-file notes.md
+          else
+            gh release create "v${version}" --target "$GITHUB_SHA" \
+              --title "bluetir ${version}" --notes-file notes.md
+          fi

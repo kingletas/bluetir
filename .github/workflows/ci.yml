@@ -1,0 +1,49 @@
+name: CI
+
+# Everything a commit has to pass, run on the machine a stranger would use
+# rather than only on the one it was written on.
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # The floor the gemspec claims, and the current release. A gem that
+        # says it supports a version it is never run on does not know that —
+        # this matrix is the only thing that checks the claim, and it caught the
+        # floor being a version selenium-webdriver cannot install on.
+        ruby: ["3.3", "3.4"]
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+
+      - uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b # v1.321.0
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+
+      - name: Lint and unit tests
+        run: make check
+
+      # The browser suite drives a real headless Chrome against a storefront
+      # built in a temp directory. It needs no Magento and reaches no network,
+      # so it runs here rather than being the thing nobody ever runs.
+      - name: Browser suite
+        run: make test-browser
+
+      # `make install` is a claim that a command works. It was false once, and
+      # every other test passed while it was, because they all ran the script
+      # from the checkout instead of the copy being shipped.
+      - name: Prove the install works
+        run: |
+          make install PREFIX="$RUNNER_TEMP/bin"
+          cd /
+          "$RUNNER_TEMP/bin/bluetir" --version

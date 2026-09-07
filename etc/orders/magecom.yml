@@ -1,0 +1,17 @@
+# Luma sample data on the Magecom demo store. Invented customer, real products.
+
+products:
+  - url: "fusion-backpack.html"
+    qty: 1
+
+customer:
+  email: "bluetir@example.test"
+  address:
+    firstname: "Test"
+    lastname: "Order"
+    street: "1 Test Street"
+    city: "Austin"
+    region: "Texas"
+    postcode: "78701"
+    country: "United States"
+    telephone: "5125550100"

@@ -1,0 +1,48 @@
+# Hyvä, with Hyvä Checkout.
+#
+# Hyvä replaces the Luma frontend with Tailwind and Alpine, and it keeps
+# Magento's own ids where they are behavioural rather than cosmetic — the
+# add-to-cart button is still #product-addtocart-button. Everything around it
+# differs: there is no quantity field on a product page, and messages live in
+# one #messages region rather than in a .message-success block per message.
+#
+# The checkout is Hyvä Checkout, which is not Magento's Knockout checkout and
+# shares none of its markup. It is also ONE page: shipping and payment are
+# both on screen at once, so there is no button to advance between them and
+# this profile deliberately declares no shipping_continue_button.
+
+name: Hyvä
+platform: magento2-hyva
+
+paths:
+  category: accessories.html
+  search: catalogsearch/result/?q=pouf
+  cart: checkout/cart/
+  checkout: checkout/
+
+texts:
+  add_to_cart_confirmation: "to your shopping cart"
+  order_success: "Thank you for your purchase!"
+
+selectors:
+  # Product page. Hyvä's default PDP has no quantity input, so none is declared
+  # and AddToCart leaves the quantity at whatever the store defaults to.
+  add_to_cart_button:        { type: button,      id: product-addtocart-button }
+  add_to_cart_confirmation:  { type: element,     id: messages }
+
+  # Checkout: contact, then one address form with per-field ids
+  checkout_email:            { type: text_field,  id: guest_details-email_address }
+  address_firstname:         { type: text_field,  id: shipping-firstname }
+  address_lastname:          { type: text_field,  id: shipping-lastname }
+  address_company:           { type: text_field,  id: shipping-company }
+  address_street:            { type: text_field,  id: shipping-street-0 }
+  address_city:              { type: text_field,  id: shipping-city }
+  address_region:            { type: select_list, id: shipping-region }
+  address_postcode:          { type: text_field,  id: shipping-postcode }
+  address_country:           { type: select_list, id: shipping-country_id }
+  address_telephone:         { type: text_field,  id: shipping-telephone }
+
+  # One page, so payment is visible at the same time as shipping.
+  shipping_method:           { type: radio,       id: shipping-method-flatrate }
+  payment_method:            { type: radio,       id: payment-method-checkmo }
+  place_order_button:        { type: button,      css: "button.btn-place-order" }

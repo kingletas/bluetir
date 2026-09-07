@@ -1,0 +1,18 @@
+# Copy this to bluetir.yml and point base_url at the store you want to test.
+# Paths below are resolved relative to this file.
+
+base_url: https://magento.test
+storefront: storefronts/magento2.yml
+assertions: assertions/magento2.yml
+orders: orders/luma.yml
+
+runs: 1
+timeout: 30
+headless: true
+screenshots_dir: screenshots
+
+# Leave smtp_server unset and no email is sent. There is no default recipient.
+# smtp_server: localhost
+# sender: bluetir@localhost
+# recipients:
+#   - you@example.test

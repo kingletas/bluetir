@@ -1,0 +1,39 @@
+# What each page has to say. Matching ignores case.
+#
+# An entry with a `url` is visited by `--mode pages`; one without is checked in
+# place by the flow that reaches that page.
+
+home:
+  - url: ""
+    expect:
+      - "Hyvä"
+
+category:
+  - url: "accessories.html"
+    expect:
+      - "Accessories"
+      - "Shop By"
+
+product:
+  - url: "atlas-pouf.html"
+    expect:
+      - "Atlas Pouf"
+      - "Add to Cart"
+  # Checked on whichever product page a flow is on. Not "Add to Cart": at phone
+  # width Hyvä renders that control as an icon with an aria-label and no text,
+  # and the words only appear in a lazily loaded related-products carousel.
+  - expect:
+      - "In stock"
+
+cart:
+  - expect:
+      - "Cart"
+
+checkout:
+  - expect:
+      - "Shipping Address"
+      - "Email address"
+
+success:
+  - expect:
+      - "Thank you for your purchase!"

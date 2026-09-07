@@ -1,0 +1,28 @@
+# Who shops here. Each entry is an archetype, not a person: the name, address
+# and email are invented fresh on every run from a seeded generator, so a run
+# that fails can be repeated exactly by passing its seed back.
+
+personas:
+  - name: "Deliberate researcher"
+    products: 3
+    browses: true
+    searches: true
+    viewport: [1440, 900]
+
+  - name: "Phone impulse buyer"
+    products: 1
+    browses: false
+    searches: false
+    viewport: [390, 844]
+
+  - name: "Tablet browser who commits"
+    products: 2
+    browses: true
+    searches: false
+    viewport: [820, 1180]
+
+  - name: "Searcher who knows the SKU"
+    products: 1
+    browses: false
+    searches: true
+    viewport: [1280, 800]

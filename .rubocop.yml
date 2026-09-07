@@ -1,0 +1,25 @@
+plugins:
+  - rubocop-minitest
+
+AllCops:
+  TargetRubyVersion: 3.3
+  NewCops: enable
+  Exclude:
+    - 'vendor/**/*'
+
+# The suite orchestrates several flows; splitting it further would hide the sequence.
+Metrics/ClassLength:
+  Max: 130
+
+Metrics/MethodLength:
+  Max: 15
+
+Layout/LineLength:
+  Max: 110
+
+# Selector names read better aligned in a column.
+Layout/ExtraSpacing:
+  AllowForAlignment: true
+
+Style/Documentation:
+  Enabled: true

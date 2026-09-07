@@ -1,0 +1,14 @@
+# The ScandiPWA technology demo's own catalogue. Invented customer.
+
+products:
+  - url: "product-162208.html"
+
+customer:
+  email: "bluetir@example.test"
+  address:
+    firstname: "Test"
+    lastname: "Order"
+    street: "1 Test Street"
+    city: "Austin"
+    postcode: "78701"
+    telephone: "5125550100"

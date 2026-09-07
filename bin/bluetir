@@ -1,14 +1,17 @@
 #!/usr/bin/env ruby
-path = '../../lib/'
+# frozen_string_literal: true
 
-=begin
-there is no point in getting arguments here, all settings will have to be read from a  file
+# Bluetir runs from its checkout, so it uses that checkout's bundle when there
+# is one. Without this the installed command can only find watir if the gems
+# happen to be in the ambient gem environment — true on the machine that
+# developed it, false anywhere gems are installed into the project, which is
+# what CI does and what any deployment-mode install does.
+gemfile = File.expand_path('../Gemfile', __dir__)
+if File.exist?(gemfile) && File.exist?("#{gemfile}.lock")
+  ENV['BUNDLE_GEMFILE'] ||= gemfile
+  require 'bundler/setup'
+end
 
-require File.expand_path("#{path}bluetir/version", __FILE__)
-require File.expand_path("#{path}bluetir/parse", __FILE__)
+require_relative '../lib/bluetir'
 
-options = Bluetir::Parse.parse(ARGV)
-=end
-
-## this code runs the tests
-require File.expand_path("#{path}watir", __FILE__)
+exit Bluetir::CLI.new(ARGV).run

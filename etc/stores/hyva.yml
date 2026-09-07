@@ -1,0 +1,22 @@
+# The public Hyvä demo. The store code is part of the path here, so the base
+# url carries /default and every store-relative path hangs off it.
+
+base_url: https://demo.hyva.io/default
+storefront: ../storefronts/hyva.yml
+assertions: ../assertions/hyva.yml
+baseline: ../../baselines/hyva.yml
+personas: ../personas.yml
+orders: ../orders/hyva.yml
+
+runs: 1
+timeout: 30
+headless: true
+screenshots_dir: ../../screenshots
+
+http:
+  delay: 2.0
+
+# Hyvä is Alpine, and Alpine binds after the document is complete. Without this
+# an add-to-cart click can land on a button that is not wired yet: the click
+# does nothing, the cart stays empty, and the checkout redirects back to it.
+settle: 8

@@ -1,0 +1,52 @@
+# Magento 2.4 with the Luma theme, guest checkout.
+#
+# Every selector the flows use lives here, so testing a different store means
+# writing another one of these rather than editing Ruby.
+
+name: Magento 2 Luma
+platform: magento2
+
+paths:
+  category: gear/bags.html
+  search: catalogsearch/result/?q=backpack
+  cart: checkout/cart/
+  checkout: checkout/
+
+texts:
+  add_to_cart_confirmation: "to your shopping cart"
+  order_success: "Thank you for your purchase!"
+
+selectors:
+  # Magento covers the page with this while it talks to the server. A click
+  # that lands during it goes to the mask, not to the button.
+  loading_mask:              { type: element,     css: "div[data-role='loader']", stage: transient }
+
+  # Product page
+  add_to_cart_button:        { type: button,      id: product-addtocart-button }
+  quantity_field:            { type: text_field,  id: qty }
+  add_to_cart_confirmation:  { type: div,         css: "div.message-success" }
+
+  # Cart page shipping estimate. Luma keeps this collapsed and does not render
+  # the fields until the title is clicked, which is what estimate_toggle is for.
+  estimate_toggle:           { type: element,     css: "#block-shipping [data-role='title']", stage: cart-estimate }
+  estimate_country:          { type: select_list, css: "#shipping-zip-form select[name='country_id']", stage: cart-estimate }
+  estimate_region:           { type: select_list, css: "#shipping-zip-form select[name='region_id']", stage: cart-estimate }
+  estimate_postcode:         { type: text_field,  css: "#shipping-zip-form input[name='postcode']", stage: cart-estimate }
+
+  # Checkout: contact and address
+  checkout_email:            { type: text_field,  id: customer-email }
+  address_firstname:         { type: text_field,  css: "#shipping-new-address-form input[name='firstname']" }
+  address_lastname:          { type: text_field,  css: "#shipping-new-address-form input[name='lastname']" }
+  address_company:           { type: text_field,  css: "#shipping-new-address-form input[name='company']" }
+  address_street:            { type: text_field,  css: "#shipping-new-address-form input[name='street[0]']" }
+  address_city:              { type: text_field,  css: "#shipping-new-address-form input[name='city']" }
+  address_region:            { type: select_list, css: "#shipping-new-address-form select[name='region_id']" }
+  address_postcode:          { type: text_field,  css: "#shipping-new-address-form input[name='postcode']" }
+  address_country:           { type: select_list, css: "#shipping-new-address-form select[name='country_id']" }
+  address_telephone:         { type: text_field,  css: "#shipping-new-address-form input[name='telephone']" }
+
+  # Checkout: shipping, payment, and the button that costs money
+  shipping_method:           { type: radio,       css: "input[value='flatrate_flatrate']" }
+  shipping_continue_button:  { type: button,      css: "button[data-role='opc-continue']" }
+  payment_method:            { type: radio,       id: checkmo, stage: payment }
+  place_order_button:        { type: button,      css: ".payment-method._active button.action.checkout", stage: payment }

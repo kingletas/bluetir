@@ -1,2 +1,23 @@
-#!/usr/bin/bash
-/var/www/batier/bin/bluetir 
+#!/usr/bin/env bash
+#
+# Refuses a push when Bluetir cannot place an order on the staging store.
+#
+# Install by copying into a bare repository's hooks/ directory. Set BLUETIR_CONFIG
+# to the config for the store this repository deploys to. Set BLUETIR_FORCE=1 on the
+# push to deploy anyway, which is the escape hatch the 2013 todo asked for.
+
+set -euo pipefail
+
+if [[ "${BLUETIR_FORCE:-0}" == "1" ]]; then
+  echo "[bluetir] BLUETIR_FORCE is set, skipping the storefront check"
+  exit 0
+fi
+
+if bluetir --mode order; then
+  echo "[bluetir] the storefront placed an order, allowing the push"
+  exit 0
+fi
+
+echo "[bluetir] the storefront check failed, refusing the push" >&2
+echo "[bluetir] push again with BLUETIR_FORCE=1 to deploy anyway" >&2
+exit 1

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Bluetir
-  VERSION = "1.1.0"
+  VERSION = '2.4.2'
 end

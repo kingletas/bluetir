@@ -1,0 +1,20 @@
+version: 2
+
+updates:
+  # The workflows pin every action to a commit SHA, which is what stops a tag
+  # being moved under us. A pin nothing ever bumps is a stale dependency nobody
+  # notices, so this is the way back out: Dependabot reads the `# vX.Y.Z`
+  # comment beside each SHA and opens a pull request that moves both together.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: ci
+
+  - package-ecosystem: bundler
+    directory: /
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: deps

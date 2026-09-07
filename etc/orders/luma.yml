@@ -1,0 +1,26 @@
+# What to buy, and who is buying it. All invented data.
+#
+# The Luma sample data ships these products. Point `url` at anything the store sells.
+
+products:
+  - url: "breathe-easy-tank.html"
+    qty: 1
+    options:
+      - { type: select_list, css: ".swatch-attribute.size select", select: "M" }
+      - { type: select_list, css: ".swatch-attribute.color select", select: "Purple" }
+
+  - url: "didi-sport-watch.html"
+    qty: 2
+
+customer:
+  email: "bluetir@example.test"
+  address:
+    firstname: "Test"
+    lastname: "Order"
+    company: "Bluetir"
+    street: "1 Test Street"
+    city: "Austin"
+    region: "Texas"
+    postcode: "78701"
+    country: "United States"
+    telephone: "5125550100"

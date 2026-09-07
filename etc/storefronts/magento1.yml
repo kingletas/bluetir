@@ -1,0 +1,41 @@
+# Magento 1.9 one-page checkout, kept as the record of what Bluetir originally drove.
+#
+# Magento 1 reached end of life in June 2020 and the demo stores this pointed at are
+# gone, so nothing can run against this profile today. It is here because it is the
+# same suite described by different data, which is the point of the format.
+
+name: Magento 1 one-page checkout
+platform: magento1
+
+paths:
+  cart: checkout/cart/
+  checkout: checkout/onepage/
+
+texts:
+  add_to_cart_confirmation: "was added to your shopping cart"
+  order_success: "Your order has been received"
+
+selectors:
+  add_to_cart_button:        { type: button,      title: "Add to Cart" }
+  quantity_field:            { type: text_field,  id: qty }
+
+  estimate_country:          { type: select_list, id: country }
+  estimate_region:           { type: select_list, id: region_id }
+  estimate_postcode:         { type: text_field,  id: postcode }
+  cart_shipping_method:      { type: radio,       id: s_method_flatrate_flatrate }
+
+  checkout_email:            { type: text_field,  id: "billing:email" }
+  address_firstname:         { type: text_field,  id: "billing:firstname" }
+  address_lastname:          { type: text_field,  id: "billing:lastname" }
+  address_company:           { type: text_field,  id: "billing:company" }
+  address_street:            { type: text_field,  id: "billing:street1" }
+  address_city:              { type: text_field,  id: "billing:city" }
+  address_region:            { type: select_list, id: "billing:region_id" }
+  address_postcode:          { type: text_field,  id: "billing:postcode" }
+  address_country:           { type: select_list, id: "billing:country_id" }
+  address_telephone:         { type: text_field,  id: "billing:telephone" }
+
+  shipping_method:           { type: radio,       id: s_method_flatrate_flatrate }
+  shipping_continue_button:  { type: button,      css: "#checkout-step-shipping_method button" }
+  payment_method:            { type: radio,       id: p_method_checkmo }
+  place_order_button:        { type: button,      css: "#checkout-step-review button" }

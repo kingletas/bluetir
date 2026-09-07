@@ -1,0 +1,65 @@
+# ScandiPWA, a React storefront over Magento's GraphQL API.
+#
+# Nothing here is Magento markup. The page is built in the browser, so every
+# selector is a ScandiPWA component class and the store needs a real settle
+# before anything is on screen.
+#
+# Two shapes differ from a server-rendered Magento:
+#
+#   * A shipping method is a BUTTON, not a radio. Field#choose clicks anything
+#     that is not a toggle, which is what makes this profile work.
+#   * The checkout is routed, not stepped: /checkout redirects to
+#     /checkout/shipping, and billing is a separate route this profile does not
+#     drive — so the payment selectors declare their stage.
+
+name: ScandiPWA
+platform: scandipwa
+
+paths:
+  category: smartphones-gadgets.html
+  search: search/phone
+  cart: cart
+  checkout: checkout/shipping
+
+texts:
+  add_to_cart_confirmation: "Product was added to cart"
+  order_success: "Your order # is:"
+
+selectors:
+  # ScandiPWA covers whatever it is fetching with this. A click during it goes
+  # to the Loader, not to the button underneath — the same failure Magento's
+  # loading mask causes, under a different class name.
+  loading_mask:              { type: element,     css: ".Loader", stage: transient }
+
+  # Product page
+  add_to_cart_button:        { type: button,      css: ".ProductActions-AddToCart" }
+  add_to_cart_confirmation:  { type: element,     css: ".Header-MinicartItemCount" }
+
+  # Checkout: contact and address. ScandiPWA names its street fields street_0
+  # rather than Magento's street[0], and gives almost nothing an id.
+  checkout_email:            { type: text_field,  name: guest_email }
+  address_firstname:         { type: text_field,  name: firstname }
+  address_lastname:          { type: text_field,  name: lastname }
+  address_street:            { type: text_field,  name: street_0 }
+  address_city:              { type: text_field,  name: city }
+  address_region:            { type: select_list, name: region_id }
+  address_postcode:          { type: text_field,  name: postcode }
+  address_country:           { type: select_list, id: address-country-id }
+  address_telephone:         { type: text_field,  name: telephone }
+
+  # A delivery option is a button here, so choosing it is a click.
+  shipping_method:           { type: button,      css: ".CheckoutDeliveryOption-Button" }
+  shipping_continue_button:  { type: button,      css: ".CheckoutShipping-Button" }
+
+  # The billing route, which this profile does not drive to.
+  payment_method:            { type: button,      css: ".CheckoutPayment-Button", stage: billing }
+  place_order_button:        { type: button,      css: ".CheckoutBilling-Button", stage: billing }
+
+  # ScandiPWA keeps COMPLETE ORDER disabled until the terms are agreed to, so
+  # the checkout cannot reach its last step without this. Declared here rather
+  # than assumed by the tool: agreeing to a shop's terms is the operator's call
+  # about their own shop. Remove this line and the run stops one step short.
+  #
+  # It points at the LABEL, not at the checkbox. The input is styled and hidden,
+  # so the input is never present and clicking the label is what a person does.
+  terms_agreement:           { type: element,     css: "label[for='termsAndConditions']", stage: billing }

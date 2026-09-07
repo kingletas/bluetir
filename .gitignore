@@ -1,0 +1,13 @@
+/.bundle/
+/vendor/bundle/
+/pkg/
+/screenshots/
+/etc/bluetir.yml
+*.gem
+.DS_Store
+/baselines/
+
+# The user-level ~/.gitignore is core.excludesFile for every repository under
+# $HOME and excludes *.sh outright. Without this negation the release workflow
+# fails on a script that was never pushed.
+!*.sh

@@ -1,0 +1,58 @@
+# What each page has to say. Matching ignores case, because a theme's
+# text-transform changes what the browser reports: this store's markup says
+# "In stock" and the rendered page says "IN STOCK".
+#
+# An entry with a `url` is visited by `--mode pages`. An entry without one is
+# checked in place by whichever flow reaches that page, which is how the cart
+# and the order confirmation are covered — neither has a URL you can just open.
+
+home:
+  - url: ""
+    expect:
+      # Main content and footer rather than the top nav: a persona on a phone
+      # gets a hamburger menu, and the nav labels are not in the page text.
+      - "Hot Sellers"
+      - "Privacy and Cookie Policy"
+
+category:
+  - url: "gear/bags.html"
+    expect:
+      - "Bags"
+      - "Shopping Options"
+      - "Sort By"
+
+product:
+  - url: "fusion-backpack.html"
+    expect:
+      - "Fusion Backpack"
+      - "Add to Cart"
+      - "In stock"
+      - "Add to Wish List"
+  - expect:
+      - "Add to Cart"
+
+search:
+  - url: "catalogsearch/result/?q=backpack"
+    expect:
+      - "Search results for: 'backpack'"
+
+cms:
+  - url: "about-us"
+    expect:
+      - "About us"
+
+cart:
+  - expect:
+      - "Shopping Cart"
+      - "Estimate Shipping and Tax"
+      - "Proceed to Checkout"
+
+checkout:
+  - expect:
+      - "Shipping Address"
+      - "Email Address"
+
+success:
+  - expect:
+      - "Thank you for your purchase!"
+      - "Your order number is"
