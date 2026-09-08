@@ -3,18 +3,25 @@
 require 'test_helper'
 
 class PageAssertionsTest < Minitest::Test
+  EXPECTATIONS = {
+    'cart' => [{ 'expect' => ['Shopping Cart', 'Estimate Shipping'] }],
+    'success' => [{ 'expect' => ['Thank you'] }]
+  }.freeze
+
   def setup
     @result = Bluetir::Report::Result.new
-    expectations = {
-      'cart' => [{ 'expect' => ['Shopping Cart', 'Estimate Shipping'] }],
-      'success' => [{ 'expect' => ['Thank you'] }]
-    }
-    @page_assertions = Bluetir::Checks::PageAssertions.new(expectations)
+    # No arrival budget, so the missing-text cases do not each wait out the
+    # real one. The test that needs a budget asks for it.
+    @page_assertions = page_checks(EXPECTATIONS)
+  end
+
+  def page_checks(data, arrival_timeout: 0)
+    Bluetir::Checks::PageAssertions.new(data, arrival_timeout: arrival_timeout)
   end
 
   def test_an_empty_file_is_not_configured
-    refute_predicate Bluetir::Checks::PageAssertions.new({}), :configured?
-    refute_predicate Bluetir::Checks::PageAssertions.new(nil), :configured?
+    refute_predicate page_checks({}), :configured?
+    refute_predicate page_checks(nil), :configured?
   end
 
   def test_it_counts_every_expectation_across_sections
@@ -32,13 +39,23 @@ class PageAssertionsTest < Minitest::Test
   # A storefront that renders its cart in JavaScript puts the text there after
   # the document is done. Checking once fails on timing rather than on content,
   # and intermittently, which is worse than failing.
+  # The tests set this to zero so the missing-text cases do not wait. A zero
+  # default would ship that, and every JavaScript storefront would start failing
+  # intermittently on timing rather than on content.
+  def test_the_default_arrival_budget_is_the_real_one
+    default = Bluetir::Checks::PageAssertions.new({}).instance_variable_get(:@arrival_timeout)
+
+    assert_equal Bluetir::Checks::PageAssertions::ARRIVAL_TIMEOUT, default
+    assert_operator default, :>, 0
+  end
+
   def test_it_waits_for_text_that_arrives_late
     browser = FakeBrowser.new(text: 'still loading')
     Thread.new do
       sleep 1
       browser.text = 'Shopping Cart — Estimate Shipping'
     end
-    @page_assertions.verify(browser, 'cart', @result)
+    page_checks(EXPECTATIONS, arrival_timeout: 10).verify(browser, 'cart', @result)
 
     assert_equal 2, @result.passed
   end
@@ -117,23 +134,22 @@ class PageAssertionsTest < Minitest::Test
   # An empty url is the home page, declared. A missing url key is not a page.
   def test_a_sweep_treats_an_empty_url_as_the_home_page
     browser = FakeBrowser.new(text: 'Welcome')
-    home = Bluetir::Checks::PageAssertions.new({ 'home' => [{ 'url' => '', 'expect' => ['Welcome'] }] })
+    home = page_checks({ 'home' => [{ 'url' => '', 'expect' => ['Welcome'] }] })
     home.sweep(browser, navigator_for(browser), @result)
 
     assert_equal ['https://store.test'], browser.visited
   end
 
   def sweepable
-    Bluetir::Checks::PageAssertions.new({
-                                          'cart' => [{ 'expect' => ['Welcome'] }],
-                                          'product' => [{ 'url' => '/thing.html',
-                                                          'expect' => ['Welcome'] }]
-                                        })
+    page_checks({
+                  'cart' => [{ 'expect' => ['Welcome'] }],
+                  'product' => [{ 'url' => '/thing.html', 'expect' => ['Welcome'] }]
+                })
   end
 
   def test_a_bare_string_is_accepted_as_an_expectation
-    assertions = Bluetir::Checks::PageAssertions.new({ 'home' => ['Welcome'] })
-    assertions.verify(FakeBrowser.new(text: 'Welcome home'), 'home', @result)
+    bare = page_checks({ 'home' => ['Welcome'] })
+    bare.verify(FakeBrowser.new(text: 'Welcome home'), 'home', @result)
 
     assert_equal 1, @result.passed
   end

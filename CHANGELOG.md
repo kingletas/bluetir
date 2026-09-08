@@ -2,6 +2,35 @@
 
 All notable changes to Bluetir are recorded here. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.5.0] — 2026-09-07
+
+### Changed
+
+- **The library is grouped into four namespaces instead of twenty flat files.**
+  `browser/` holds everything that touches a live page, `flows/` the sequences a
+  customer performs, `checks/` everything that decides whether the store is
+  right, and `report/` what comes out. Where a file sits now tells you what it
+  is allowed to know about. The constants moved with the directories —
+  `Bluetir::Result` is `Bluetir::Report::Result`, `Bluetir::Field` is
+  `Bluetir::Browser::Field`, and so on. The command, the configuration format
+  and the storefront profiles are unchanged.
+- **How long a string gets to arrive is now the caller's to set.** It was a
+  constant, so every check for text that is genuinely absent waited the full ten
+  seconds. The default is unchanged and a test guards it, because a zero default
+  would make every JavaScript storefront fail on timing rather than on content.
+
+### Fixed
+
+- **The test task listed its directories by hand**, so a new directory of tests
+  would have been skipped in silence. It globs now.
+- **`rake check` takes under three seconds instead of seventy-two.** One file
+  held all of it, waiting out the arrival budget on every missing-text case.
+
+### Added
+
+- **The README says how the code is laid out**, so someone opening it can tell
+  which directory a change belongs in.
+
 ## [2.4.2] — 2026-09-07
 
 ### Fixed

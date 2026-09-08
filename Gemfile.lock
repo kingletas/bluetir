@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    bluetir (2.4.2)
+    bluetir (2.5.0)
       net-smtp (~> 0.5)
       watir (~> 7.3)
 

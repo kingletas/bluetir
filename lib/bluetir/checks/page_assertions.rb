@@ -21,12 +21,14 @@ module Bluetir
       # after the document is done, so checking once and immediately fails on
       # timing rather than on content — and it fails intermittently, which is
       # worse than failing. Only a string that is NOT there costs this wait, so a
-      # passing run is not slowed by it
+      # passing run is not slowed by it — but a test of the missing case pays it
+      # every time, which is why the caller can set it.
       ARRIVAL_TIMEOUT = 10
 
-      def initialize(data, screenshots: nil)
+      def initialize(data, screenshots: nil, arrival_timeout: ARRIVAL_TIMEOUT)
         @sections = normalise(data || {})
         @screenshots = screenshots
+        @arrival_timeout = arrival_timeout
       end
 
       def sections
@@ -119,7 +121,7 @@ module Bluetir
         wanted = expected.downcase
         return true if page_text(browser).downcase.include?(wanted)
 
-        deadline = Time.now + ARRIVAL_TIMEOUT
+        deadline = Time.now + @arrival_timeout
         until Time.now >= deadline
           sleep 0.5
           return true if page_text(browser).downcase.include?(wanted)
