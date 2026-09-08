@@ -64,7 +64,7 @@ module Bluetir
 
     def build_selectors(raw)
       raw.each_with_object({}) do |(name, definition), built|
-        built[name] = Selector.new(name, definition)
+        built[name] = Browser::Selector.new(name, definition)
       end
     end
 

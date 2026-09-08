@@ -23,7 +23,7 @@ class AcceptanceTest < Minitest::Test
 
   def test_a_store_that_has_not_changed_reports_no_drift
     capture
-    result = Bluetir::Result.new
+    result = Bluetir::Report::Result.new
     in_browser(result) { |a| a.compare(store: store, against: @baseline_file) }
 
     assert_predicate result, :passed?
@@ -38,7 +38,7 @@ class AcceptanceTest < Minitest::Test
   def test_a_renamed_button_is_reported_as_a_regression
     capture
     break_the_add_to_cart_button
-    result = Bluetir::Result.new
+    result = Bluetir::Report::Result.new
     in_browser(result) { |a| a.compare(store: store, against: @baseline_file) }
 
     refute_predicate result, :passed?
@@ -49,7 +49,7 @@ class AcceptanceTest < Minitest::Test
     capture
 
     assert_predicate @baseline_file, :file?
-    back = Bluetir::Baseline.load(@baseline_file)
+    back = Bluetir::Checks::Baseline.load(@baseline_file)
 
     assert_includes back.selectors.keys, 'add_to_cart_button'
     assert_equal store, back.store
@@ -67,20 +67,20 @@ class AcceptanceTest < Minitest::Test
   end
 
   def capture
-    in_browser(Bluetir::Result.new) do |acceptance|
+    in_browser(Bluetir::Report::Result.new) do |acceptance|
       acceptance.capture(store: store, to: @baseline_file)
     end
   end
 
   def in_browser(result)
-    session = Bluetir::BrowserSession.new(base_url: store, http: Bluetir::HttpSettings.from({}),
-                                          timeout: 10, headless: true)
+    session = Bluetir::Browser::Session.new(base_url: store, http: Bluetir::Browser::HttpSettings.from({}),
+                                            timeout: 10, headless: true)
     session.open do |browser|
       context = Bluetir::Flows::Context.new(
         browser: browser, storefront: @storefront, navigator: navigator_for(browser, store),
-        assertions: Bluetir::PageAssertions.new({}), result: result, screenshots: nil
+        assertions: Bluetir::Checks::PageAssertions.new({}), result: result, screenshots: nil
       )
-      yield Bluetir::Acceptance.new(context, orders, StringIO.new)
+      yield Bluetir::Checks::Acceptance.new(context, orders, StringIO.new)
     end
   end
 

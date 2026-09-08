@@ -4,7 +4,7 @@ require 'test_helper'
 
 class ResultTest < Minitest::Test
   def setup
-    @result = Bluetir::Result.new
+    @result = Bluetir::Report::Result.new
   end
 
   def test_a_run_with_no_checks_has_not_passed

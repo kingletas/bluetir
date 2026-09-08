@@ -233,6 +233,21 @@ bluetir --mode pages
 
 Push with `BLUETIR_FORCE=1` to deploy anyway.
 
+## How the code is laid out
+
+Each directory under `lib/bluetir/` is a namespace, so where a file sits tells you what it is allowed to know about.
+
+| Directory | What lives there |
+|---|---|
+| `browser/` | Everything that touches a live page — opening the browser, moving between pages, finding an element and clicking it, and the HTTP settings that shape every request |
+| `flows/` | The sequences a customer performs: add to cart, ask for a shipping quote, walk the checkout, shop as one persona |
+| `checks/` | Everything that decides whether the store is right — the text assertions, the selector probe, and the baseline an acceptance run compares against |
+| `report/` | What comes out: the running tally, the screenshots, the email |
+
+Four files sit at the top level because they are the run itself rather than a part of it: `configuration.rb` is what a run was told, `storefront.rb` is the profile it was pointed at, `persona.rb` is who is shopping, and `suite.rb` puts those together and executes the mode. `cli.rb` is the command.
+
+Nothing in `flows/` or `checks/` knows any markup. A flow asks the storefront profile for a selector by name, and the profile is YAML. That is what lets one suite drive Luma, Hyvä and ScandiPWA without a branch anywhere in the Ruby.
+
 ## Running the checks
 
 ```bash

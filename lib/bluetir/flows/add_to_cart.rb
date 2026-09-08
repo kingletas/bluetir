@@ -24,8 +24,8 @@ module Bluetir
 
       def choose_options(options)
         Array(options).each_with_index do |definition, index|
-          selector = Selector.new("option #{index + 1}", definition)
-          apply(Field.new(browser, selector), definition)
+          selector = Browser::Selector.new("option #{index + 1}", definition)
+          apply(Browser::Field.new(browser, selector), definition)
         end
       end
 

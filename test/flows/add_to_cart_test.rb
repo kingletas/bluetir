@@ -4,7 +4,7 @@ require 'test_helper'
 
 class AddToCartTest < Minitest::Test
   def setup
-    @result = Bluetir::Result.new
+    @result = Bluetir::Report::Result.new
     @storefront = Bluetir::Storefront.new(YAML.safe_load(ConfigFixture.storefront))
     @product = { 'url' => 'a-product.html', 'qty' => 2 }
   end
@@ -38,7 +38,7 @@ class AddToCartTest < Minitest::Test
   def add(browser)
     context = Bluetir::Flows::Context.new(
       browser: browser, storefront: @storefront, navigator: navigator_for(browser),
-      assertions: Bluetir::PageAssertions.new({}), result: @result, screenshots: nil
+      assertions: Bluetir::Checks::PageAssertions.new({}), result: @result, screenshots: nil
     )
     Bluetir::Flows::AddToCart.new(context)
   end

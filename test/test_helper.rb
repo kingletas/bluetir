@@ -80,7 +80,7 @@ class FakeBrowser
   end
 
   # The collection side. A selector that matches several elements is the whole
-  # reason Field looks past the first one.
+  # reason Browser::Field looks past the first one.
   %i[elements buttons links text_fields textareas select_lists radios checkboxes
      divs spans].each do |kind|
     define_method(kind) do |locator|
@@ -128,9 +128,9 @@ class FakeBrowser
   def close = self
 end
 
-# A real Navigator over a fake browser, with the delay turned off for the tests.
+# A real Browser::Navigator over a fake browser, with the delay turned off for the tests.
 def navigator_for(browser, base = 'https://store.test', params: {})
-  Bluetir::Navigator.new(browser, url: Bluetir::Url.new(base, params: params), delay: 0)
+  Bluetir::Browser::Navigator.new(browser, url: Bluetir::Browser::Url.new(base, params: params), delay: 0)
 end
 
 # Records what was done to the cookie jar.

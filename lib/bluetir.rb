@@ -1,27 +1,33 @@
 # frozen_string_literal: true
 
 require_relative 'bluetir/version'
-require_relative 'bluetir/http_settings'
-require_relative 'bluetir/url'
-require_relative 'bluetir/navigator'
-require_relative 'bluetir/result'
+
+require_relative 'bluetir/browser/http_settings'
+require_relative 'bluetir/browser/url'
+require_relative 'bluetir/browser/navigator'
+require_relative 'bluetir/browser/selector'
+require_relative 'bluetir/browser/field'
+require_relative 'bluetir/browser/session'
+
+require_relative 'bluetir/report/result'
+require_relative 'bluetir/report/screenshots'
+require_relative 'bluetir/report/notifier'
+
 require_relative 'bluetir/configuration'
-require_relative 'bluetir/selector'
-require_relative 'bluetir/field'
 require_relative 'bluetir/storefront'
-require_relative 'bluetir/screenshots'
-require_relative 'bluetir/page_assertions'
-require_relative 'bluetir/browser_session'
-require_relative 'bluetir/notifier'
+require_relative 'bluetir/persona'
+
 require_relative 'bluetir/flows/add_to_cart'
 require_relative 'bluetir/flows/shipping_quote'
 require_relative 'bluetir/flows/checkout'
 require_relative 'bluetir/flows/persona_run'
-require_relative 'bluetir/persona'
-require_relative 'bluetir/probe'
-require_relative 'bluetir/baseline'
-require_relative 'bluetir/acceptance'
-require_relative 'bluetir/shoppers'
+
+require_relative 'bluetir/checks/page_assertions'
+require_relative 'bluetir/checks/probe'
+require_relative 'bluetir/checks/baseline'
+require_relative 'bluetir/checks/acceptance'
+require_relative 'bluetir/checks/shoppers'
+
 require_relative 'bluetir/suite'
 require_relative 'bluetir/cli'
 

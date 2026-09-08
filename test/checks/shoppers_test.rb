@@ -6,7 +6,7 @@ class ShoppersTest < Minitest::Test
   def setup
     @browser = FakeBrowser.new(text: 'Thank you for your purchase!')
     @storefront = Bluetir::Storefront.new(YAML.safe_load(ConfigFixture.storefront))
-    @result = Bluetir::Result.new
+    @result = Bluetir::Report::Result.new
     @output = StringIO.new
   end
 
@@ -37,14 +37,14 @@ class ShoppersTest < Minitest::Test
   end
 
   def visit
-    Bluetir::Shoppers.new(configuration, @output)
-                     .visit(context, persona, persona.identity(Random.new(3)))
+    Bluetir::Checks::Shoppers.new(configuration, @output)
+                             .visit(context, persona, persona.identity(Random.new(3)))
   end
 
   def context
     Bluetir::Flows::Context.new(
       browser: @browser, storefront: @storefront, navigator: navigator_for(@browser),
-      assertions: Bluetir::PageAssertions.new({}), result: @result, screenshots: nil
+      assertions: Bluetir::Checks::PageAssertions.new({}), result: @result, screenshots: nil
     )
   end
 

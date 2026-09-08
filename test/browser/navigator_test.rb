@@ -32,7 +32,8 @@ class NavigatorTest < Minitest::Test
 
   def test_the_first_page_is_not_delayed_but_the_next_one_is
     browser = FakeBrowser.new
-    nav = Bluetir::Navigator.new(browser, url: Bluetir::Url.new('https://store.test'), delay: 0.2)
+    nav = Bluetir::Browser::Navigator.new(browser, url: Bluetir::Browser::Url.new('https://store.test'),
+                                                   delay: 0.2)
 
     first = Time.now
     nav.go('a')

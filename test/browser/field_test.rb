@@ -36,7 +36,7 @@ class FieldTest < Minitest::Test
   def test_a_missing_element_is_not_present_rather_than_an_error
     browser = FakeBrowser.new(missing: [{ id: 'gone' }])
 
-    refute_predicate Bluetir::Field.new(browser, selector('type' => 'button', 'id' => 'gone')),
+    refute_predicate Bluetir::Browser::Field.new(browser, selector('type' => 'button', 'id' => 'gone')),
                      :present?
   end
 
@@ -68,10 +68,10 @@ class FieldTest < Minitest::Test
   end
 
   def selector(definition)
-    Bluetir::Selector.new('under test', definition)
+    Bluetir::Browser::Selector.new('under test', definition)
   end
 
   def field(definition)
-    Bluetir::Field.new(@browser, selector(definition))
+    Bluetir::Browser::Field.new(@browser, selector(definition))
   end
 end

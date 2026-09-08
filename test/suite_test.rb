@@ -71,11 +71,11 @@ class SuiteTest < Minitest::Test
   # Redefining a method on a real class outlives the test that did it and
   # poisons whichever test minitest happens to run next, so it is put back.
   def without_really_shopping
-    original = Bluetir::Shoppers.instance_method(:visit)
-    Bluetir::Shoppers.define_method(:visit) { |*| true }
+    original = Bluetir::Checks::Shoppers.instance_method(:visit)
+    Bluetir::Checks::Shoppers.define_method(:visit) { |*| true }
     yield
   ensure
-    Bluetir::Shoppers.define_method(:visit, original)
+    Bluetir::Checks::Shoppers.define_method(:visit, original)
   end
 
   def in_config_dir(assertions: nil, personas: nil)

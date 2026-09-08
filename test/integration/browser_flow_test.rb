@@ -12,7 +12,7 @@ class BrowserFlowTest < Minitest::Test
     @dir = Dir.mktmpdir('bluetir-fixture')
     @root = FixtureStore.build(@dir)
     @storefront = Bluetir::Storefront.load(@root.join('storefront.yml'))
-    @result = Bluetir::Result.new
+    @result = Bluetir::Report::Result.new
   end
 
   def teardown
@@ -44,8 +44,8 @@ class BrowserFlowTest < Minitest::Test
   end
 
   def test_the_assertions_it_runs_can_actually_fail
-    assertions = Bluetir::PageAssertions.new({ 'product' => [{ 'expect' => ['In stock',
-                                                                            'Not on this page'] }] })
+    assertions = Bluetir::Checks::PageAssertions.new({ 'product' => [{ 'expect' => ['In stock',
+                                                                                    'Not on this page'] }] })
     in_browser(assertions: assertions) do |context|
       Bluetir::Flows::AddToCart.new(context).call('url' => 'product.html')
 
@@ -62,10 +62,10 @@ class BrowserFlowTest < Minitest::Test
       'country' => 'United States', 'telephone' => '5125550100' }
   end
 
-  def in_browser(timeout: 10, assertions: Bluetir::PageAssertions.new({}))
+  def in_browser(timeout: 10, assertions: Bluetir::Checks::PageAssertions.new({}))
     base_url = "file://#{@root}"
-    session = Bluetir::BrowserSession.new(base_url: base_url, http: Bluetir::HttpSettings.from({}),
-                                          timeout: timeout, headless: true)
+    session = Bluetir::Browser::Session.new(base_url: base_url, http: Bluetir::Browser::HttpSettings.from({}),
+                                            timeout: timeout, headless: true)
     session.open do |b|
       yield Bluetir::Flows::Context.new(browser: b, storefront: @storefront,
                                         navigator: navigator_for(b, base_url),

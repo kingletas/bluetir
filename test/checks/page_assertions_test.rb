@@ -4,17 +4,17 @@ require 'test_helper'
 
 class PageAssertionsTest < Minitest::Test
   def setup
-    @result = Bluetir::Result.new
-    @page_assertions = Bluetir::PageAssertions.new({
-                                                     'cart' => [{ 'expect' => ['Shopping Cart',
-                                                                               'Estimate Shipping'] }],
-                                                     'success' => [{ 'expect' => ['Thank you'] }]
-                                                   })
+    @result = Bluetir::Report::Result.new
+    expectations = {
+      'cart' => [{ 'expect' => ['Shopping Cart', 'Estimate Shipping'] }],
+      'success' => [{ 'expect' => ['Thank you'] }]
+    }
+    @page_assertions = Bluetir::Checks::PageAssertions.new(expectations)
   end
 
   def test_an_empty_file_is_not_configured
-    refute_predicate Bluetir::PageAssertions.new({}), :configured?
-    refute_predicate Bluetir::PageAssertions.new(nil), :configured?
+    refute_predicate Bluetir::Checks::PageAssertions.new({}), :configured?
+    refute_predicate Bluetir::Checks::PageAssertions.new(nil), :configured?
   end
 
   def test_it_counts_every_expectation_across_sections
@@ -117,22 +117,22 @@ class PageAssertionsTest < Minitest::Test
   # An empty url is the home page, declared. A missing url key is not a page.
   def test_a_sweep_treats_an_empty_url_as_the_home_page
     browser = FakeBrowser.new(text: 'Welcome')
-    home = Bluetir::PageAssertions.new({ 'home' => [{ 'url' => '', 'expect' => ['Welcome'] }] })
+    home = Bluetir::Checks::PageAssertions.new({ 'home' => [{ 'url' => '', 'expect' => ['Welcome'] }] })
     home.sweep(browser, navigator_for(browser), @result)
 
     assert_equal ['https://store.test'], browser.visited
   end
 
   def sweepable
-    Bluetir::PageAssertions.new({
-                                  'cart' => [{ 'expect' => ['Welcome'] }],
-                                  'product' => [{ 'url' => '/thing.html',
-                                                  'expect' => ['Welcome'] }]
-                                })
+    Bluetir::Checks::PageAssertions.new({
+                                          'cart' => [{ 'expect' => ['Welcome'] }],
+                                          'product' => [{ 'url' => '/thing.html',
+                                                          'expect' => ['Welcome'] }]
+                                        })
   end
 
   def test_a_bare_string_is_accepted_as_an_expectation
-    assertions = Bluetir::PageAssertions.new({ 'home' => ['Welcome'] })
+    assertions = Bluetir::Checks::PageAssertions.new({ 'home' => ['Welcome'] })
     assertions.verify(FakeBrowser.new(text: 'Welcome home'), 'home', @result)
 
     assert_equal 1, @result.passed

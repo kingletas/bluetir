@@ -3,10 +3,11 @@
 require 'rake/testtask'
 require 'rubocop/rake_task'
 
+# Globbed rather than listed, so a new subdirectory of tests runs without
+# anyone remembering to add it here.
 Rake::TestTask.new(:test) do |t|
   t.libs << 'lib' << 'test'
-  t.pattern = 'test/*_test.rb'
-  t.test_files = FileList['test/*_test.rb', 'test/flows/*_test.rb']
+  t.test_files = FileList['test/**/*_test.rb'].exclude('test/integration/*_test.rb')
   t.warning = false
 end
 

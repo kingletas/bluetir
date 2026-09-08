@@ -43,7 +43,7 @@ module Bluetir
 
     # Executes the run and returns the tally. Never raises for a failing check.
     def run
-      @result = Result.new
+      @result = Report::Result.new
       guard_assertions
       # Persona mode opens a browser per shopper, so it manages its own.
       if @mode == 'persona'
@@ -71,22 +71,22 @@ module Bluetir
     private
 
     def assertions
-      @assertions ||= PageAssertions.new(@configuration.assertions, screenshots: screenshots)
+      @assertions ||= Checks::PageAssertions.new(@configuration.assertions, screenshots: screenshots)
     end
 
     def screenshots
-      @screenshots ||= Screenshots.new(@configuration.resolve(@configuration.screenshots_dir))
+      @screenshots ||= Report::Screenshots.new(@configuration.resolve(@configuration.screenshots_dir))
     end
 
     def session
-      BrowserSession.new(base_url: @configuration.base_url, http: @configuration.http,
-                         timeout: @configuration.timeout, headless: @configuration.headless)
+      Browser::Session.new(base_url: @configuration.base_url, http: @configuration.http,
+                           timeout: @configuration.timeout, headless: @configuration.headless)
     end
 
     def navigator_for(browser)
-      url = Url.new(@configuration.base_url, params: @configuration.http.params)
-      Navigator.new(browser, url: url, delay: @configuration.http.delay,
-                             settle: @configuration.settle)
+      url = Browser::Url.new(@configuration.base_url, params: @configuration.http.params)
+      Browser::Navigator.new(browser, url: url, delay: @configuration.http.delay,
+                                      settle: @configuration.settle)
     end
 
     # An assertions file that asserts nothing would pass every run without checking anything.
@@ -118,7 +118,7 @@ module Bluetir
     # that looks like a broken store. A new browser has no history to leak.
     def shop_as_people(_context)
       random = Random.new(@seed)
-      shoppers = Shoppers.new(@configuration, @output)
+      shoppers = Checks::Shoppers.new(@configuration, @output)
       @configuration.personas.each do |persona|
         identity = persona.identity(random)
         session.open { |browser| shoppers.visit(build_context(browser, @result), persona, identity) }
@@ -126,7 +126,7 @@ module Bluetir
     end
 
     def probe_selectors(context)
-      probe = Probe.new(context, @configuration.orders)
+      probe = Checks::Probe.new(context, @configuration.orders)
       probe.report(probe.run, @output, context.result)
     end
 
@@ -157,12 +157,12 @@ module Bluetir
     end
 
     def acceptance(context)
-      Acceptance.new(context, @configuration.orders, @output)
+      Checks::Acceptance.new(context, @configuration.orders, @output)
     end
 
     def notify(result)
-      notifier = Notifier.new(recipients: @configuration.recipients, sender: @configuration.sender,
-                              server: @configuration.smtp_server)
+      notifier = Report::Notifier.new(recipients: @configuration.recipients, sender: @configuration.sender,
+                                      server: @configuration.smtp_server)
       notifier.deliver(result, @configuration.base_url)
     end
 

@@ -24,7 +24,7 @@ module Bluetir
       def assertions = context.assertions
 
       def field(name)
-        Field.new(browser, storefront[name])
+        Browser::Field.new(browser, storefront[name])
       end
 
       # Clicks, once the store has stopped covering the page.
@@ -97,7 +97,7 @@ module Bluetir
       end
 
       # Whether the page shows this text, ignoring case for the reason in
-      # PageAssertions: a theme's text-transform changes what the browser reports.
+      # Checks::PageAssertions: a theme's text-transform changes what the browser reports.
       def page_says?(text)
         browser.text.downcase.include?(text.to_s.downcase)
       end

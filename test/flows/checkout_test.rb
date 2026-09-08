@@ -6,7 +6,7 @@ class CheckoutTest < Minitest::Test
   SUCCESS = 'Thank you for your purchase!'
 
   def setup
-    @result = Bluetir::Result.new
+    @result = Bluetir::Report::Result.new
     @storefront = Bluetir::Storefront.new(YAML.safe_load(ConfigFixture.storefront))
     @order = YAML.safe_load(ConfigFixture.orders)['customer']
   end
@@ -152,7 +152,7 @@ class CheckoutTest < Minitest::Test
   def checkout(browser)
     context = Bluetir::Flows::Context.new(
       browser: browser, storefront: @storefront, navigator: navigator_for(browser),
-      assertions: Bluetir::PageAssertions.new({}), result: @result, screenshots: nil
+      assertions: Bluetir::Checks::PageAssertions.new({}), result: @result, screenshots: nil
     )
     Bluetir::Flows::Checkout.new(context)
   end

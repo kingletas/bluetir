@@ -4,7 +4,7 @@ require 'test_helper'
 
 class ProbeTest < Minitest::Test
   def setup
-    @result = Bluetir::Result.new
+    @result = Bluetir::Report::Result.new
     @browser = FakeBrowser.new(missing: [{ id: 'checkmo' }])
     @storefront = Bluetir::Storefront.new(YAML.safe_load(ConfigFixture.storefront))
   end
@@ -49,7 +49,7 @@ class ProbeTest < Minitest::Test
       super
       @url = "#{url}/"
     end
-    result = Bluetir::Result.new
+    result = Bluetir::Report::Result.new
     probe_with(browser, result).run
 
     landing_failures = result.failures.select { |c| c.description.include?('page loads') }
@@ -62,16 +62,16 @@ class ProbeTest < Minitest::Test
   def probe_with(browser, result)
     context = Bluetir::Flows::Context.new(
       browser: browser, storefront: @storefront, navigator: navigator_for(browser),
-      assertions: Bluetir::PageAssertions.new({}), result: result, screenshots: nil
+      assertions: Bluetir::Checks::PageAssertions.new({}), result: result, screenshots: nil
     )
-    Bluetir::Probe.new(context, YAML.safe_load(ConfigFixture.orders))
+    Bluetir::Checks::Probe.new(context, YAML.safe_load(ConfigFixture.orders))
   end
 
   def probe
     context = Bluetir::Flows::Context.new(
       browser: @browser, storefront: @storefront, navigator: navigator_for(@browser),
-      assertions: Bluetir::PageAssertions.new({}), result: @result, screenshots: nil
+      assertions: Bluetir::Checks::PageAssertions.new({}), result: @result, screenshots: nil
     )
-    Bluetir::Probe.new(context, YAML.safe_load(ConfigFixture.orders))
+    Bluetir::Checks::Probe.new(context, YAML.safe_load(ConfigFixture.orders))
   end
 end

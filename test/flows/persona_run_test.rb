@@ -7,7 +7,7 @@ class PersonaRunTest < Minitest::Test
   SUCCESS = 'Thank you for your purchase!'
 
   def setup
-    @result = Bluetir::Result.new
+    @result = Bluetir::Report::Result.new
     @storefront = Bluetir::Storefront.new(YAML.safe_load(ConfigFixture.storefront))
     @orders = YAML.safe_load(ConfigFixture.orders)
   end
@@ -79,7 +79,7 @@ class PersonaRunTest < Minitest::Test
   def shopper(browser, persona: archetype, who: identity)
     context = Bluetir::Flows::Context.new(
       browser: browser, storefront: @storefront, navigator: navigator_for(browser),
-      assertions: Bluetir::PageAssertions.new({}), result: @result, screenshots: nil
+      assertions: Bluetir::Checks::PageAssertions.new({}), result: @result, screenshots: nil
     )
     Bluetir::Flows::PersonaRun.new(context, persona: persona, identity: who, orders: @orders)
   end

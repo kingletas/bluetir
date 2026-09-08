@@ -94,7 +94,7 @@ module Bluetir
     end
 
     def assign_http(data)
-      @http = HttpSettings.from(data['http'])
+      @http = Browser::HttpSettings.from(data['http'])
     end
 
     def assign_run(data)
