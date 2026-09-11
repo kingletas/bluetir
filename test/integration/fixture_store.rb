@@ -3,6 +3,7 @@
 require 'tmpdir'
 require 'pathname'
 require_relative 'configurable_page'
+require_relative 'checkout_page'
 
 # A four-page storefront written to disk, so a flow can be driven through a real browser.
 #
@@ -24,7 +25,7 @@ module FixtureStore
     root.join('product.html').write(product_page)
     root.join('configurable.html').write(ConfigurablePage.html)
     root.join('cart.html').write(cart_page)
-    root.join('checkout.html').write(checkout_page)
+    root.join('checkout.html').write(CheckoutPage.html)
     root.join('storefront.yml').write(profile)
     root
   end
@@ -53,35 +54,6 @@ module FixtureStore
           <select name="country_id"><option>United States</option><option>Canada</option></select>
           <select name="region_id"><option>Texas</option><option>Ohio</option></select>
           <input name="postcode">
-        </div>
-      </body></html>
-    HTML
-  end
-
-  def checkout_page
-    <<~HTML
-      <html><body>
-        <h1>Shipping Address</h1>
-        <input id="customer-email">
-        <div id="shipping-new-address-form">
-          <input name="firstname"><input name="lastname"><input name="company">
-          <input name="street[0]"><input name="city">
-          <select name="region_id"><option>Texas</option></select>
-          <input name="postcode">
-          <select name="country_id"><option>United States</option></select>
-          <input name="telephone">
-        </div>
-        <input type="radio" value="flatrate_flatrate" name="shipping">
-        <button data-role="opc-continue">Next</button>
-        <input type="radio" id="checkmo" name="payment">
-        <div class="payment-method _active">
-          <button class="action checkout" onclick="
-            document.getElementById('done').style.display='block'">Place Order</button>
-        </div>
-        <div id="done" class="checkout-success" style="display:none">
-          <h1>#{SUCCESS_TEXT}</h1>
-          #{GUEST_ORDER_NUMBER}
-          #{ORDER_EMAIL}
         </div>
       </body></html>
     HTML

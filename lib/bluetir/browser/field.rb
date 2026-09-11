@@ -74,6 +74,18 @@ module Bluetir
         self
       end
 
+      # Where the element sits on the page and how big it is, or nil while it isn't shown.
+      def box
+        target = usable
+        return unless target.present?
+
+        point = target.location
+        dimension = target.size
+        [point.x, point.y, dimension.width, dimension.height]
+      rescue Watir::Exception::Error, Selenium::WebDriver::Error::WebDriverError
+        nil
+      end
+
       def to_s
         @selector.to_s
       end

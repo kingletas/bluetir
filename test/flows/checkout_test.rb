@@ -149,11 +149,12 @@ class CheckoutTest < Minitest::Test
     YAML.safe_load(ConfigFixture.orders)['customer']['address']
   end
 
+  # Nothing on a fake page moves, so waiting for Place Order to hold still would only slow the suite down.
   def checkout(browser)
     context = Bluetir::Flows::Context.new(
       browser: browser, storefront: @storefront, navigator: navigator_for(browser),
       assertions: Bluetir::Checks::PageAssertions.new({}), result: @result, screenshots: nil
     )
-    Bluetir::Flows::Checkout.new(context)
+    Bluetir::Flows::Checkout.new(context, still_for: 0)
   end
 end

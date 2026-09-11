@@ -23,8 +23,7 @@ class BrowserFlowTest < Minitest::Test
     in_browser do |context|
       Bluetir::Flows::AddToCart.new(context).call('url' => 'product.html', 'qty' => 3)
       Bluetir::Flows::ShippingQuote.new(context).call(address)
-      placed = Bluetir::Flows::Checkout.new(context).call('email' => 'buyer@example.test',
-                                                          'address' => address)
+      placed = place_order(context)
 
       assert placed, "checkout failed: #{@result.failure_lines.join('; ')}"
       assert_predicate @result, :passed?
@@ -36,11 +35,27 @@ class BrowserFlowTest < Minitest::Test
       @root.join('checkout.html').read.sub(FixtureStore::SUCCESS_TEXT, 'An error has occurred')
     )
     in_browser(timeout: 3) do |context|
-      refute Bluetir::Flows::Checkout.new(context).call('email' => 'buyer@example.test',
-                                                        'address' => address)
+      refute place_order(context)
       refute_predicate @result, :passed?
       assert_match(/the order was placed/, @result.failure_lines.last)
     end
+  end
+
+  # Luma draws the billing address above Place Order after the button appears, so an early click lands on it.
+  def test_it_places_the_order_once_a_late_billing_address_stops_covering_the_button
+    use_settling_checkout(settles_after_ms: 1500)
+
+    in_browser { |context| assert place_order(context), "checkout failed: #{what_failed}" }
+
+    assert_predicate @result, :passed?
+  end
+
+  def test_a_billing_address_that_never_moves_off_the_button_fails_the_order
+    use_settling_checkout(settles_after_ms: -1)
+
+    in_browser(timeout: 3) { |context| refute place_order(context) }
+
+    assert_match(/the order was placed.*click intercepted.*billing-address-details/m, what_failed)
   end
 
   def test_the_assertions_it_runs_can_actually_fail
@@ -55,6 +70,18 @@ class BrowserFlowTest < Minitest::Test
   end
 
   private
+
+  def place_order(context)
+    Bluetir::Flows::Checkout.new(context).call('email' => 'buyer@example.test', 'address' => address)
+  end
+
+  def what_failed
+    @result.failure_lines.join('; ')
+  end
+
+  def use_settling_checkout(settles_after_ms:)
+    @root.join('checkout.html').write(CheckoutPage.settling(settles_after_ms: settles_after_ms))
+  end
 
   def address
     { 'firstname' => 'Test', 'lastname' => 'Order', 'street' => '1 Test Street',

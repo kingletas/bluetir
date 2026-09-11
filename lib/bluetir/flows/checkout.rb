@@ -164,9 +164,11 @@ module Bluetir
         end
       end
 
+      # Luma renders the billing address above the button after the button appears, so the click waits
+      # for the payment step to settle.
       def place_order
         placed = expect('success', 'the order was placed') do
-          field('place_order_button').click
+          click_once_settled(field('place_order_button'))
           wait_until? { page_says?(storefront.text('order_success')) }
         end
         assertions.verify(browser, 'success', result) if placed

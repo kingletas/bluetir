@@ -32,6 +32,10 @@ class FakeElement
   def scroll = self
   def to(_position) = self
 
+  # A click on Place Order waits for the button to stop moving, so every double needs a place on the page.
+  def location = Selenium::WebDriver::Point.new(0, 0)
+  def size = Selenium::WebDriver::Dimension.new(120, 40)
+
   def wait_until(timeout: nil)
     raise Watir::Wait::TimeoutError, "never became true (#{timeout})" unless yield(self)
 
@@ -160,6 +164,82 @@ class BouncingBrowser < FakeBrowser
       @bounced = true
       return super(@bounce_to)
     end
+    super
+  end
+end
+
+# A button that slides down while the page lays out, then rests, and remembers where it was clicked.
+class SlidingElement < FakeElement
+  RESTING_TOP = 400
+  STEP = 20
+  STEP_EVERY = 0.05
+
+  attr_reader :clicked_at
+
+  def initialize(locator, moves_for:, **rest)
+    super(locator, **rest)
+    @settles_at = clock + moves_for
+  end
+
+  def location = Selenium::WebDriver::Point.new(0, top)
+
+  def click
+    @clicked_at = top
+    super
+  end
+
+  private
+
+  def top
+    remaining = @settles_at - clock
+    remaining.positive? ? RESTING_TOP - (STEP * (remaining / STEP_EVERY).ceil) : RESTING_TOP
+  end
+
+  def clock = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+end
+
+# A button something else sits on top of for its first few clicks, refused the way Selenium refuses them.
+class CoveredElement < FakeElement
+  attr_reader :attempts
+
+  def initialize(locator, covered_for:, **rest)
+    super(locator, **rest)
+    @covered_for = covered_for
+    @attempts = 0
+  end
+
+  def click
+    @attempts += 1
+    if @attempts <= @covered_for
+      raise Selenium::WebDriver::Error::ElementClickInterceptedError,
+            'element click intercepted: Other element would receive the click: ' \
+            '<div class="billing-address-details">'
+    end
+    super
+  end
+end
+
+# A browser whose page is re-rendering, so reading the loading mask fails the first few times.
+class ChangingPageBrowser < FakeBrowser
+  POLLS = 5
+
+  def initialize(changes:, **rest)
+    super(**rest)
+    @changes = changes
+  end
+
+  def elements(locator)
+    if @changes.positive?
+      @changes -= 1
+      raise Watir::Exception::LocatorException,
+            "Unable to locate element collection from #{locator} due to changing page"
+    end
+    super
+  end
+
+  # Polls the way Watir does, rather than giving up on the first false.
+  def wait_until(timeout: nil, &)
+    POLLS.times { return self if yield(self) }
     super
   end
 end

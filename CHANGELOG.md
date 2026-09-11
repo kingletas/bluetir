@@ -20,12 +20,28 @@ All notable changes to Bluetir are recorded here. Format follows [Keep a Changel
   the run carries on.
 - **A missing string reports the wait it was actually given.** The message
   always said ten seconds, whatever the caller set.
+- **Place Order waits for the payment step to settle.** Luma draws the billing
+  address above the button after the button appears, and on a store in
+  developer mode that often happened between aiming the click and making it,
+  so the click landed on the address and the order failed with
+  `ElementClickInterceptedError`. The click now waits for the loading mask to
+  go and for the button to stop moving, and a click something else takes is
+  tried again until the timeout. A refused click never reaches the button, so
+  trying again can't place a second order, and a button that stays covered
+  still fails the order.
+- **Waiting for the loading mask survives the page changing underneath it.**
+  Magento can swap the checkout step while the mask is being read, and Watir's
+  "due to changing page" error used to fail the step outright. It now counts as
+  still loading.
 
 ### Added
 
 - **The browser suite runs the shipped Luma order and success expectations**
   against a swatch product and Magento's guest and customer success pages, and
   shows each one failing when the page doesn't give it what it needs.
+- **The browser suite runs a checkout whose billing address renders over Place
+  Order before pushing it down**, the late layout shift Luma produces, and one
+  where the address never moves, which has to fail.
 - **The README says an order has been placed through the Luma profile**, on a
   local Mage-OS 3.5 store.
 
