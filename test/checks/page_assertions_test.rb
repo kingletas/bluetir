@@ -67,6 +67,13 @@ class PageAssertionsTest < Minitest::Test
     assert_match(/Estimate Shipping/, @result.failure_lines.first)
   end
 
+  def test_a_failure_states_the_wait_it_was_given
+    browser = FakeBrowser.new(text: 'Shopping Cart')
+    page_checks(EXPECTATIONS, arrival_timeout: 0).verify(browser, 'cart', @result)
+
+    assert_match(/within 0s/, @result.failure_lines.first)
+  end
+
   # The commonest reason a string is missing is that the browser is somewhere
   # else entirely, and without the url that is indistinguishable from a store
   # that changed its wording.

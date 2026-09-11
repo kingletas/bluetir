@@ -13,6 +13,13 @@ All notable changes to Bluetir are recorded here. Format follows [Keep a Changel
   "Your order number is", which Magento shows only to a signed-in customer; a
   guest sees "Your order # is". It now expects the confirmation-email line,
   which both see and which only appears once an order exists.
+- **A product option the page won't take is a failed check, not a crash.**
+  It used to raise out of the add to cart and end the run, so the steps after
+  it never got a verdict. Each option is now recorded as a cart check naming
+  the product, the first one refused stops that product from being added, and
+  the run carries on.
+- **A missing string reports the wait it was actually given.** The message
+  always said ten seconds, whatever the caller set.
 
 ### Added
 

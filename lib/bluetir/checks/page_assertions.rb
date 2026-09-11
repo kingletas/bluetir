@@ -92,7 +92,7 @@ module Bluetir
           result.pass(section, "page contains #{expected.inspect}")
         else
           result.fail(section, "page contains #{expected.inspect}",
-                      "it was not on the page within #{ARRIVAL_TIMEOUT}s" \
+                      "it was not on the page within #{@arrival_timeout}s" \
                       "#{on_page(browser)}#{what_was_there(browser)}")
         end
       end

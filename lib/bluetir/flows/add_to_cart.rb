@@ -12,7 +12,8 @@ module Bluetir
       def call(product)
         goto(product['url'])
         assertions.verify(browser, 'product', result)
-        choose_options(product['options'])
+        return false unless options_chosen?(product)
+
         enter_quantity(product['qty'])
         expect('cart', "added #{product['url']} to the cart") do
           click(field('add_to_cart_button'))
@@ -22,10 +23,15 @@ module Bluetir
 
       private
 
-      def choose_options(options)
-        Array(options).each_with_index do |definition, index|
+      # Records each option as a check and stops at the first the page refuses,
+      # so a half-chosen product is never added.
+      def options_chosen?(product)
+        Array(product['options']).each_with_index.all? do |definition, index|
           selector = Browser::Selector.new("option #{index + 1}", definition)
-          apply(Browser::Field.new(browser, selector), definition)
+          expect('cart', "chose #{selector} on #{product['url']}") do
+            apply(Browser::Field.new(browser, selector), definition)
+            true
+          end
         end
       end
 
