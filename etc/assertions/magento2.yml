@@ -52,7 +52,9 @@ checkout:
       - "Shipping Address"
       - "Email Address"
 
+# A guest reads "Your order # is" and a signed-in customer "Your order number is";
+# the email line is printed for both, and only once an order exists.
 success:
   - expect:
       - "Thank you for your purchase!"
-      - "Your order number is"
+      - "We'll email you an order confirmation"

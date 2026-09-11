@@ -2,19 +2,27 @@
 
 require 'tmpdir'
 require 'pathname'
+require_relative 'configurable_page'
 
-# A three-page storefront written to disk, so a flow can be driven through a real browser.
+# A four-page storefront written to disk, so a flow can be driven through a real browser.
 #
 # The markup copies the ids and names Magento 2 Luma uses, which is what makes this a
 # test of the selectors and not only of the Ruby around them.
 module FixtureStore
   SUCCESS_TEXT = 'Thank you for your purchase!'
 
+  # Magento_Checkout's success.phtml: the order line depends on whether the shopper can view the order.
+  GUEST_ORDER_NUMBER = '<p>Your order # is: <span>000000001</span>.</p>'
+  CUSTOMER_ORDER_NUMBER = '<p>Your order number is: <a href="#" class="order-number">' \
+                          '<strong>000000001</strong></a>.</p>'
+  ORDER_EMAIL = '<p>We&#039;ll email you an order confirmation with details and tracking info.</p>'
+
   module_function
 
   def build(dir)
     root = Pathname.new(dir)
     root.join('product.html').write(product_page)
+    root.join('configurable.html').write(ConfigurablePage.html)
     root.join('cart.html').write(cart_page)
     root.join('checkout.html').write(checkout_page)
     root.join('storefront.yml').write(profile)
@@ -70,7 +78,11 @@ module FixtureStore
           <button class="action checkout" onclick="
             document.getElementById('done').style.display='block'">Place Order</button>
         </div>
-        <div id="done" style="display:none">#{SUCCESS_TEXT} Your order number is 000000001.</div>
+        <div id="done" class="checkout-success" style="display:none">
+          <h1>#{SUCCESS_TEXT}</h1>
+          #{GUEST_ORDER_NUMBER}
+          #{ORDER_EMAIL}
+        </div>
       </body></html>
     HTML
   end

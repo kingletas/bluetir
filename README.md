@@ -264,7 +264,7 @@ That drives the real flows through headless Chromium against a small static stor
 
 ## What isn't verified
 
-**No order has been placed through any of these profiles.** Every step up to the final button is verified against a live store; the button itself isn't, because pressing it puts a real order on somebody else's system. Run `--mode order` yourself against a store you own.
+**Only the Luma profile has placed an order, and only on a local store.** A guest order for two items went through `magento2.yml` with `orders/luma.yml` on a Mage-OS 3.5 (Magento 2.4.9) store with Luma sample data. The Hyvä and ScandiPWA profiles are verified up to the final button and not past it, because their demo stores belong to somebody else and pressing it puts a real order there. Run `--mode order` yourself against a store you own.
 
 The Magento 1 profile can't be verified at all. Magento 1 reached end of life in June 2020 and the demo stores Bluetir originally pointed at are gone. It's kept because it's the same suite described by different data, which is the whole point of the format.
 

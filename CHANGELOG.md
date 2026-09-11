@@ -2,6 +2,26 @@
 
 All notable changes to Bluetir are recorded here. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- **The Luma order picks size and colour by clicking the swatch.** Luma
+  renders both as swatches, not drop-downs, so the add to cart failed with
+  `"M" not found` and nothing after it ran.
+- **The Magento 2 success check passes for a guest order.** It expected
+  "Your order number is", which Magento shows only to a signed-in customer; a
+  guest sees "Your order # is". It now expects the confirmation-email line,
+  which both see and which only appears once an order exists.
+
+### Added
+
+- **The browser suite runs the shipped Luma order and success expectations**
+  against a swatch product and Magento's guest and customer success pages, and
+  shows each one failing when the page doesn't give it what it needs.
+- **The README says an order has been placed through the Luma profile**, on a
+  local Mage-OS 3.5 store.
+
 ## [2.5.0] — 2026-09-07
 
 ### Changed
