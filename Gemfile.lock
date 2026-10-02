@@ -10,11 +10,14 @@ GEM
   specs:
     ast (2.4.3)
     base64 (0.3.0)
+    drb (2.2.3)
     json (3.0.2)
     language_server-protocol (3.17.0.6)
     lint_roller (1.1.0)
     logger (1.7.0)
-    minitest (5.27.0)
+    minitest (6.0.6)
+      drb (~> 2.0)
+      prism (~> 1.5)
     net-protocol (0.3.0)
       timeout
     net-smtp (0.5.1)
@@ -70,7 +73,7 @@ PLATFORMS
 
 DEPENDENCIES
   bluetir!
-  minitest (~> 5.25)
+  minitest (~> 6.0)
   rake (~> 13.2)
   rubocop (~> 1.91)
   rubocop-minitest (~> 0.36)
