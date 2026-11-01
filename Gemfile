@@ -8,5 +8,5 @@ group :development, :test do
   gem 'minitest', '~> 6.0'
   gem 'rake', '~> 13.2'
   gem 'rubocop', '~> 1.91'
-  gem 'rubocop-minitest', '~> 0.36'
+  gem 'rubocop-minitest', '~> 0.41'
 end
